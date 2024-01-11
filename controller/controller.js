@@ -47,7 +47,6 @@ exports.listMentorsForStudents = async (req, res) => {
     }
 }
 
-
 exports.createMentors = async (req, res) => {
     new_mentor = {
         name: req.body.name,
@@ -96,63 +95,6 @@ exports.createStudents = async (req, res) => {
     }
 }
 
-// exports.createStudents = async (req, res) => {
-
-//     new_student = {
-//         name: req.body.name,
-//         email: req.body.email,
-//     };    
-
-//     try {
-//         const check_student_mail = await StudentSchema.findOne({
-//             email: new_student.email,
-//         });
-//         if (check_student_mail) return res.status(400).end("email already exist");
-//         const student = await new StudentSchema(new_student);
-//         student.save();
-//         await StudentSchema.find().then((data) => {
-//             return res.status(200).json(data);
-//         });
-//     } catch (err) {
-//         res.status(500).send(new Error(err).message);
-//     }
-// };
-
-// exports.createStudents = async (req, res) => {
-//     try {
-//         const { name, email } = req.body
-
-//         const existingStudent = await StudentSchema.findOne({ email })
-
-//         if (existingStudent) return res.status(400).end("email already exist");
-
-//         const student = new StudentSchema({
-//             name,
-//             email
-//         })
-        
-//         const newStudent = [...student]
-//         await newStudent.save()
-
-//         return res.status(200).send("student created successfully")
-//     } catch (err) {
-//         res.status(500).send(new Error(err).message);
-//     }
-// }
-
-// const newUser = new User({
-//     name,
-//     email,
-//     password: hashedPassword,
-// });
-
-// // save the user
-// await newUser.save();
-// res.status(201).json({ message: 'User created successfully' });
-
-//         }
-
-
 exports.addStudentForMentor = async (req, res) => {
     const mentor_id = req.params.mentor_id;
     const student_list = req.body.student;
@@ -200,10 +142,7 @@ exports.addMentorForStudent = async (req, res) => {
                 $set: {
                     mentor: mentor_id,
                     
-                },
-                // $addToSet: {
-                //     mentorlist: mentor_id,
-                // },
+                },                
                 $push: {
                    mentorList: mentor_id
                 },
@@ -215,10 +154,3 @@ exports.addMentorForStudent = async (req, res) => {
         res.status(500).send(new Error(err).message);
     }
 }; 
-
-
-// const updatedStudent = await Student.findOneAndUpdate(
-//     { _id: studentId },
-//     { $set: { mentor_id: newMentorIds } },
-//     { new: true }
-// );
